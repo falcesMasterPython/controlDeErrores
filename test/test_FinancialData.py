@@ -50,8 +50,7 @@ class FinancialDataTest(unittest.TestCase):
 
         self.financialData.setDataFrame(self.dataFrame2)
 
-        with self.assertRaises(Exception) as context:
-            pass
+        self.assertRaises(CSVHasNotTwelveColumns)
 
         self.assertTrue('This is broken' in str(context.exception))
 
