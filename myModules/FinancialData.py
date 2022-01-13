@@ -16,11 +16,6 @@ class FinancialData:
         self.maxOutcomingAmount = None
         self.df = None
 
-        try:
-            self.setDataFrame()
-        except Error as e:
-            print(e)
-
     def setDataFrame(self, data='data/finanzas2020.csv'):
         try:
             if type(data) == str:
@@ -35,7 +30,7 @@ class FinancialData:
             self.checkTwelveColumnsInDataFrame()
             self.checkAllMonthsHaveData()
             self.checkValues()
-        except Exception as e:
+        except Error as e:
             print(e)
 
     def getDataFrameFromCSV(self, file):
@@ -139,4 +134,5 @@ class FinancialData:
 
 if __name__ == '__main__':
     financialData = FinancialData()
+    financialData.setDataFrame()
     financialData.printResults()
