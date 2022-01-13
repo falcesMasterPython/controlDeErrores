@@ -22,12 +22,17 @@ class FinancialData:
                 self.file = data
                 self.df = self.getDataFrameFromCSV(self.file)
             elif type(data) == dict:
-                self.df = pd.DataFrame(data)
+                self.df = data
             else:
                 raise DataTypeNotAllowed(type(data))
 
             self.prepareDataFrame()
-            self.checkTwelveColumnsInDataFrame()
+
+            if self.checkTwelveColumnsInDataFrame() is False:
+                self.file = None
+                raise CSVHasNotTwelveColumns(self.file)
+
+            # self.checkTwelveColumnsInDataFrame()
             self.checkAllMonthsHaveData()
             self.checkValues()
         except Error as e:
@@ -47,9 +52,9 @@ class FinancialData:
             raise CantCreateDataFrame(e)
 
     def checkTwelveColumnsInDataFrame(self):
-        if len(self.df.columns) != 12:
-            raise CSVHasNotTwelveColumns(self.file)
-        return True
+        if len(self.df.columns) == 12:
+            return True
+        return False
 
     def checkAllMonthsHaveData(self):
         for i in self.df.index:
