@@ -54,6 +54,7 @@ class FinancialData:
     def checkTwelveColumnsInDataFrame(self):
         if len(self.df.columns) != 12:
             raise CSVHasNotTwelveColumns(self.file)
+        return True
 
     def checkAllMonthsHaveData(self):
         for i in self.df.index:
