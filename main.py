@@ -1,7 +1,8 @@
 import pandas as pd
 from myModules import *
 
-class FinancialData():
+
+class FinancialData:
 
     def __init__(self):
         try:
@@ -16,10 +17,10 @@ class FinancialData():
             self.checkValues()
 
             self.maxOutcomingAmount = self.getMaxOutcomingAmount()
-            self.maxOutcomingMonth  = self.getMaxOutcomingMonth()
+            self.maxOutcomingMonth = self.getMaxOutcomingMonth()
 
             self.minOutcomingAmount = self.getMinOutcomingAmount()
-            self.minOutcomingMonth  = self.getMinOutcomingMonth()
+            self.minOutcomingMonth = self.getMinOutcomingMonth()
 
             self.outcomingAverage = self.getOutcomingAverage()
 
@@ -42,20 +43,20 @@ class FinancialData():
             raise CantCreateDataFrame(e)
 
     def checkTwelveColumnsInDataFrame(self):
-        if(len(self.df.columns) != 12):
+        if (len(self.df.columns) != 12):
             raise CSVHasNotTwelveColumns(self.file)
 
     def checkAllMonthsHaveData(self):
         for i in self.df.index:
             for c in self.df.columns:
-                if(pd.isna(self.df.loc[i, c])):
+                if (pd.isna(self.df.loc[i, c])):
                     self.df.loc[i, c] = 0
 
     def checkValues(self):
         for i in self.df.index:
             for c in self.df.columns:
                 value = self.df.loc[i, c]
-                if(type(value) == str):
+                if (type(value) == str):
                     try:
                         value = float(value)
                     except Exception:
@@ -95,13 +96,13 @@ class FinancialData():
 
     def getTotalOutcoming(self):
         try:
-            return self.df.iloc[:,1:].where(self.df.iloc[:,1:]<0).sum(axis=1).sum()
+            return self.df.iloc[:, 1:].where(self.df.iloc[:, 1:] < 0).sum(axis=1).sum()
         except Exception as e:
             raise CantGetTotalOutcoming(e)
 
     def getTotalIncoming(self):
         try:
-            return self.df.iloc[:,1:].where(self.df.iloc[:,1:]>=0).sum(axis=1).sum()
+            return self.df.iloc[:, 1:].where(self.df.iloc[:, 1:] >= 0).sum(axis=1).sum()
         except Exception as e:
             raise CantGetTotalIncoming(e)
 
@@ -112,6 +113,7 @@ class FinancialData():
         print(f"El total de gastos ha sido {self.totalOutcoming}")
         print(f"El total de ingresos ha sido {self.totalIncoming}")
 
-if(__name__ == '__main__'):
+
+if __name__ == '__main__':
     financialData = FinancialData()
     financialData.printResults()
