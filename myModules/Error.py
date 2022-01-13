@@ -75,6 +75,12 @@ class CSVHasNotTwelveColumns(Error):
 
 
 class EmptyField(Error):
-    def __init__(self, campo):
-        errorMessage = f'El campo {campo} no tiene datos'
+    def __init__(self, field):
+        errorMessage = f'El campo {field} no tiene datos'
+        super().__init__(errorMessage, self.getName())
+
+
+class DataTypeNotAllowed(Error):
+    def __init__(self, type):
+        errorMessage = f'El tipo de datos {type} no está soportado'
         super().__init__(errorMessage, self.getName())

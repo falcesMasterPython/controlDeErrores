@@ -5,37 +5,44 @@ from myModules.Error import *
 class FinancialData:
 
     def __init__(self):
+
+        self.file = None
+        self.totalIncoming = None
+        self.totalOutcoming = None
+        self.outcomingAverage = None
+        self.minOutcomingMonth = None
+        self.minOutcomingAmount = None
+        self.maxOutcomingMonth = None
+        self.maxOutcomingAmount = None
         self.df = None
+
         try:
-            self.errorOnLoad = None
-
-            self.file = 'data/finanzas2020.csv'
-
-            self.getDataFrameFromCSV()
-
-            self.prepareDataFrame()
-
-            self.checkTwelveColumnsInDataFrame()
-            self.checkAllMonthsHaveData()
-            self.checkValues()
-
-            self.maxOutcomingAmount = self.getMaxOutcomingAmount()
-            self.maxOutcomingMonth = self.getMaxOutcomingMonth()
-
-            self.minOutcomingAmount = self.getMinOutcomingAmount()
-            self.minOutcomingMonth = self.getMinOutcomingMonth()
-
-            self.outcomingAverage = self.getOutcomingAverage()
-
-            self.totalOutcoming = self.getTotalOutcoming()
-            self.totalIncoming = self.getTotalIncoming()
+            self.setDataFrame()
         except Error as e:
             print(e)
 
-    def getDataFrameFromCSV(self):
+    def setDataFrame(self, data='data/finanzas2020.csv'):
         try:
-            self.df = pd.read_csv(self.file, sep='\t')
+            if type(data) == str:
+                self.file = data
+                self.df = self.getDataFrameFromCSV(self.file)
+            elif type(data) == dict:
+                self.df = pd.DataFrame(data)
+            else:
+                raise DataTypeNotAllowed(type(data))
+
+            self.prepareDataFrame()
+            self.checkTwelveColumnsInDataFrame()
+            self.checkAllMonthsHaveData()
+            self.checkValues()
         except Exception as e:
+            print(e)
+
+    def getDataFrameFromCSV(self, file):
+        try:
+            return pd.read_csv(file, sep='\t')
+        except Exception as e:
+            self.file = None
             raise FinnancialFileNotFound(e)
 
     def prepareDataFrame(self):
@@ -110,13 +117,24 @@ class FinancialData:
 
     def printResults(self):
         try:
-            print(f"El mes que más se ha gastado ha sido {self.maxOutcomingMonth} ({self.maxOutcomingAmount})")
-            print(f"El mes que menos se ha gastado ha sido {self.minOutcomingMonth} ({self.minOutcomingAmount})")
-            print(f"La media de gasto mensual ha sido {self.outcomingAverage}")
-            print(f"El total de gastos ha sido {self.totalOutcoming}")
-            print(f"El total de ingresos ha sido {self.totalIncoming}")
+            if self.file is None:
+                raise Exception('No hay datos')
+            else:
+                self.maxOutcomingAmount = self.getMaxOutcomingAmount()
+                self.maxOutcomingMonth = self.getMaxOutcomingMonth()
+                self.minOutcomingAmount = self.getMinOutcomingAmount()
+                self.minOutcomingMonth = self.getMinOutcomingMonth()
+                self.outcomingAverage = self.getOutcomingAverage()
+                self.totalOutcoming = self.getTotalOutcoming()
+                self.totalIncoming = self.getTotalIncoming()
+
+                print(f"El mes que más se ha gastado ha sido {self.maxOutcomingMonth} ({self.maxOutcomingAmount})")
+                print(f"El mes que menos se ha gastado ha sido {self.minOutcomingMonth} ({self.minOutcomingAmount})")
+                print(f"La media de gasto mensual ha sido {self.outcomingAverage}")
+                print(f"El total de gastos ha sido {self.totalOutcoming}")
+                print(f"El total de ingresos ha sido {self.totalIncoming}")
         except Exception as e:
-            print('Error:', e)
+            print(e)
 
 
 if __name__ == '__main__':
