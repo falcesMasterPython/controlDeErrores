@@ -69,7 +69,7 @@ class FinancialData:
                 if type(value) == str:
                     try:
                         value = float(value)
-                    except Exception:
+                    except:
                         value = 0
                     finally:
                         self.df.loc[i, c] = value
