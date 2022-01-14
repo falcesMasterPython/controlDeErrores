@@ -32,8 +32,9 @@ class FinancialData:
                 self.file = None
                 raise CSVHasNotTwelveColumns(self.file)
 
-            # self.checkTwelveColumnsInDataFrame()
-            self.checkAllMonthsHaveData()
+            if self.checkAllMonthsHaveData() is False:
+                self.addZeroToEmptyData()
+
             self.checkValues()
         except Error as e:
             print(e)
@@ -57,6 +58,16 @@ class FinancialData:
         return False
 
     def checkAllMonthsHaveData(self):
+        for i in self.df.index:
+            for c in self.df.columns:
+                # print('Valor:', self.df.loc[i, c], type(self.df.loc[i, c]))
+                # if pd.isna(self.df.loc[i, c]):
+                if self.df.loc[i, c] == '':
+                    print('Valor:', self.df.loc[i, c], type(self.df.loc[i, c]))
+                    return False
+        return True
+
+    def addZeroToEmptyData(self):
         for i in self.df.index:
             for c in self.df.columns:
                 if pd.isna(self.df.loc[i, c]):
