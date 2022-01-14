@@ -1,12 +1,17 @@
 import pandas as pd
-from myModules.Error import *
-
+from FinancialErrors.FinancialErrors import *
 
 class FinancialData:
 
-    def __init__(self):
+    def __init__(self, data=None):
 
-        self.file = None
+        if data == None:
+            self.data = 'data/finanzas2020.csv'
+        else:
+            self.data = data
+
+        self.df = None
+
         self.totalIncoming = None
         self.totalOutcoming = None
         self.outcomingAverage = None
@@ -14,43 +19,46 @@ class FinancialData:
         self.minOutcomingAmount = None
         self.maxOutcomingMonth = None
         self.maxOutcomingAmount = None
-        self.df = None
 
-    def setDataFrame(self, data='data/finanzas2020.csv'):
+        self.setDataFrame()
+
+    def setDataFrame(self):
         try:
-            if type(data) == str:
-                self.file = data
-                self.df = self.getDataFrameFromCSV(self.file)
-            elif type(data) == dict:
-                self.df = data
+            if type(self.data) is None:
+                raise DataTypeNotAllowed(type(self.data))
+            elif type(self.data) == str:
+                self.df = self.getDataFrameFromCSV(self.data)
+            elif type(self.data) == dict:
+                self.df = self.data
             else:
-                raise DataTypeNotAllowed(type(data))
-
-            self.prepareDataFrame()
-
-            if self.checkTwelveColumnsInDataFrame() is False:
-                self.file = None
-                raise CSVHasNotTwelveColumns(self.file)
-
-            if self.checkAllMonthsHaveData() is False:
-                self.addZeroToEmptyData()
-
-            self.checkValues()
-        except Error as e:
+                self.data = None
+                raise DataTypeNotAllowed(type(self.data))
+            self.df = pd.DataFrame(self.df)
+        except FinancialErrors as e:
             print(e)
 
     def getDataFrameFromCSV(self, file):
         try:
             return pd.read_csv(file, sep='\t')
         except Exception as e:
-            self.file = None
+            self.data = None
             raise FinnancialFileNotFound(e)
 
-    def prepareDataFrame(self):
+    def checkDataFrame(self):
         try:
-            self.df = pd.DataFrame(self.df)
-        except Exception as e:
-            raise CantCreateDataFrame(e)
+            if(self.data != None):
+                if self.checkTwelveColumnsInDataFrame() is False:
+                    self.data = None
+                    raise CSVHasNotTwelveColumns(self.file)
+
+                if self.checkAllMonthsHaveData() is False:
+                    self.addZeroToEmptyData()
+
+                self.checkValues()
+            else:
+                raise FinnancialFileNotFound('No hay datos')
+        except FinancialErrors as e:
+            print(e)
 
     def checkTwelveColumnsInDataFrame(self):
         if len(self.df.columns) == 12:
@@ -129,8 +137,8 @@ class FinancialData:
 
     def printResults(self):
         try:
-            if self.file is None:
-                raise Exception('No hay datos')
+            if self.data is None:
+                raise NoFinancialData()
             else:
                 self.maxOutcomingAmount = self.getMaxOutcomingAmount()
                 self.maxOutcomingMonth = self.getMaxOutcomingMonth()
@@ -145,11 +153,13 @@ class FinancialData:
                 print(f"La media de gasto mensual ha sido {self.outcomingAverage}")
                 print(f"El total de gastos ha sido {self.totalOutcoming}")
                 print(f"El total de ingresos ha sido {self.totalIncoming}")
-        except Exception as e:
+        except FinancialErrors as e:
             print(e)
 
 
 if __name__ == '__main__':
-    financialData = FinancialData()
+    from FinancialErrors.FinancialErrors import *
+    financialData = FinancialData('../data/finanzas2020a.csv')
     financialData.setDataFrame()
+    financialData.checkDataFrame()
     financialData.printResults()
