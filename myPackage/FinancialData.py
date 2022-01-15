@@ -1,5 +1,6 @@
 import pandas as pd
-from myModules.Error import *
+from myPackage.Error import *
+import os
 
 
 class FinancialData:
@@ -16,8 +17,11 @@ class FinancialData:
         self.maxOutcomingAmount = None
         self.df = None
 
-    def setDataFrame(self, data='data/finanzas2020.csv'):
+        self.dirname = os.path.dirname(__file__)
+
+    def setDataFrame(self, data='../data/finanzas2020.csv'):
         try:
+            data = os.path.join(self.dirname, data)
             if type(data) == str:
                 self.file = data
                 self.df = self.getDataFrameFromCSV(self.file)
@@ -32,7 +36,6 @@ class FinancialData:
                 self.file = None
                 raise CSVHasNotTwelveColumns(self.file)
 
-            # self.checkTwelveColumnsInDataFrame()
             self.checkAllMonthsHaveData()
             self.checkValues()
         except Error as e:

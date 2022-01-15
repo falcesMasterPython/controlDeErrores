@@ -1,4 +1,4 @@
-from myModules import *
+from myPackage import *
 
 financialData = FinancialData()
 financialData.setDataFrame()
