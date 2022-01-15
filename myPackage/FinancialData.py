@@ -21,8 +21,8 @@ class FinancialData:
 
     def setDataFrame(self, data='../data/finanzas2020.csv'):
         try:
-            data = os.path.join(self.dirname, data)
             if type(data) == str:
+                data = os.path.join(self.dirname, data)
                 self.file = data
                 self.df = self.getDataFrameFromCSV(self.file)
             elif type(data) == dict:
