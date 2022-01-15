@@ -81,6 +81,6 @@ class EmptyField(Error):
 
 
 class DataTypeNotAllowed(Error):
-    def __init__(self, type):
-        errorMessage = f'El tipo de datos {type} no está soportado'
+    def __init__(self, dataType):
+        errorMessage = f'El tipo de datos {dataType} no está soportado'
         super().__init__(errorMessage, self.getName())

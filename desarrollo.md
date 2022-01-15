@@ -1,4 +1,4 @@
-### Ejecución
+## Ejecución
 
 Requiere PIP instalado.
 
@@ -7,7 +7,7 @@ $ pip install -r requirements.txt
 $ python main.py
 ```
 
-### Resultados
+## Resultados
 
 - El mes que más se ha gastado ha sido Enero (12064.0)
 - El mes que menos se ha gastado ha sido Abril (-18933)
@@ -15,7 +15,7 @@ $ python main.py
 - El total de gastos ha sido -279170.0
 - El total de ingresos ha sido 251276.0
 
-### Desarrollo
+## Desarrollo
 
 He aprovechado el ejercicio para profundizar en el manejo de Pandas, ya que tenía conocimiento muy básico.
 
@@ -33,8 +33,23 @@ Otras funciones que pueden ser de interés en esta clase:
 
 He ido programando las funcionalidades que se solicitan y forzando algunos errores para ver cómo devuelvo los datos de los errores. También he creado archivos CSV para comprobar el funcionamiento cuando nos falta una columna o cuando un dato viene en blanco.
 
-### Estructura
+## Estructura
 
 Estoy profundizando en estructurar los ejercicios como si de proyectos complejos se tratara. Evidentemente hacer este ejercicio con paquetes y módulos es exagerado, pero quiero ir profundizando en cómo estructurar proyectos más complejos, de ahí la estructura que presento.
 
 He incluido el uso del paquete os de Python para poder ejecutar el script tanto desde main como desde el directorio del paquete, de forma que pueda hacer pruebas de un único módulo.
+
+## Testing
+
+He creado mocks con juegos de prueba en `/test/datasets.py` para poder probar toda la funcionalidad.
+
+### Pytest
+
+Los test para PyTest se encuentran en `/test/test_FinancialData_pytest.py`.
+
+Ejecución
+
+```bash
+$ pytest test/test_FinancialData_pytest.py
+```
+
