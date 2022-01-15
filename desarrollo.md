@@ -36,3 +36,5 @@ He ido programando las funcionalidades que se solicitan y forzando algunos error
 ### Estructura
 
 Estoy profundizando en estructurar los ejercicios como si de proyectos complejos se tratara. Evidentemente hacer este ejercicio con paquetes y módulos es exagerado, pero quiero ir profundizando en cómo estructurar proyectos más complejos, de ahí la estructura que presento.
+
+He incluido el uso del paquete os de Python para poder ejecutar el script tanto desde main como desde el directorio del paquete, de forma que pueda hacer pruebas de un único módulo.
