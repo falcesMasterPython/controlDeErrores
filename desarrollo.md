@@ -64,3 +64,37 @@ En este test mockeamos un dataset  con 11 columnas y comprobamos si podemos usar
 ### test_checkValues_space_is_converted
 
 En este test mockeamos un dataset con un dato en formato texto y comprobamos que se convierte a cero
+
+# Documentación
+
+## Herramienta
+
+Después de haber revisado algunas herramientas (Epydoc, Doxygen y MkDocs), he optado por el software Pycco.
+
+Me ha gustado que utiliza MarkDown para formatear, pero no lo hace muy bien. El formato de salida es muy original, con dos columanas. Básicamente lo que hace es sacar los comentarios para ponerlos en la columna de la izquierda a la altura del código al que hacen referencia, que está en la columna de la derecha.
+
+### Instalación:
+
+```bash
+$ pip install pycco
+```
+
+### Uso
+
+Para generar la documentación de un archivo específico:
+
+```bash
+# pycco [ruta]/[archivo].py
+$ pycco myPackage/FinancialData.py
+```
+
+Para generar la documentación de los archivos contenidos en una carpeta:
+
+```bash
+# pycco [ruta]
+$ pycco myPackage
+```
+
+### Documentos generados
+
+Pycco genera una carpeta `/docs` en la raíz del proyecto con archivos `.html`, uno por cada módulo (archivo) Python.
