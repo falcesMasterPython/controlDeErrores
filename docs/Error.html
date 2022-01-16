@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>Error.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>Error.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <h1>Clase Error</h1>
+<p>Esta es la clase padre para imprimir por pantalla las excepciones lanzadas en  <a href="FinancialData.html">FinancialData.py</a></p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <h1>Constructor</h1>
+<ul>
+<li>Recibe el comentario a mostrar por pantalla</li>
+<li>Recibe el nombre de la excepción hija (opcional) (ver método en  <a href="Error.html#getname">Error.py</a>).</li>
+<li>Crea un cuadro en formato ASCII para imprimir en pantalla</li>
+</ul>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;Exception&#39;</span><span class="p">):</span>
+        <span class="n">errorMessage</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+        <span class="n">top</span> <span class="o">=</span> <span class="s1">&#39;┌&#39;</span>
+        <span class="n">messageText</span> <span class="o">=</span> <span class="s1">&#39;| Error (&#39;</span> <span class="o">+</span> <span class="n">origin</span> <span class="o">+</span> <span class="s1">&#39;): &#39;</span> <span class="o">+</span> <span class="n">errorMessage</span> <span class="o">+</span> <span class="s1">&#39; |</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">bottom</span> <span class="o">=</span> <span class="s1">&#39;└&#39;</span>
+
+        <span class="n">messageLength</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">messageText</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">messageLength</span><span class="p">):</span>
+            <span class="n">top</span> <span class="o">+=</span> <span class="s1">&#39;-&#39;</span>
+            <span class="n">bottom</span> <span class="o">+=</span> <span class="s1">&#39;-&#39;</span>
+
+        <span class="n">top</span> <span class="o">+=</span> <span class="s1">&#39;┐</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">bottom</span> <span class="o">+=</span> <span class="s1">&#39;┘</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">top</span> <span class="o">+</span> <span class="n">messageText</span> <span class="o">+</span> <span class="n">bottom</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <h3><span id="getname" href="getname"> getName </span></h3>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Devuelve un string con el nombre de la clase que ejecuta el método.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <h2>FinnancialFileNotFound</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">FinnancialFileNotFound</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede leer el archivo CSV especificado.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="n">errorMessage</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;No se puede leer el archivo CSV: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <h2>CantCreateDataFrame</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantCreateDataFrame</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede crear el data frame a partir de los datos dados.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="n">errorMessage</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;No puedo crear el DataFrame: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <h2>CantGetMaxOutcomingAmount</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantGetMaxOutcomingAmount</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede calcular la mayor cantidad de gasto.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <h2>CantGetMaxOutcomingMonth</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantGetMaxOutcomingMonth</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede especificar el mes de mayor gasto.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <h2>CantGetMinOutcomingAmount</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantGetMinOutcomingAmount</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede calcular la menor cantidad de gasto.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      <h2>CantGetMinOutcomingMonth</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantGetMinOutcomingMonth</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede leer el archivo CSV especificado.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      <h2>CantGetOutcomingAverage</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantGetOutcomingAverage</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-18'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-18'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede leer el archivo CSV especificado.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-19'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-19'>#</a>
+      </div>
+      <h2>CantGetTotalOutcoming</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantGetTotalOutcoming</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-20'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-20'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede especificar el mes de menor gasto.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-21'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      <h2>CantGetTotalIncoming</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CantGetTotalIncoming</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-22'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-22'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no se puede calcular el total de gastos.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-23'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-23'>#</a>
+      </div>
+      <h2>CSVHasNotTwelveColumns</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">CSVHasNotTwelveColumns</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-24'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-24'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando el dataframe generado no tiene doce columnas.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="n">errorMessage</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;El documento </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2"> no tiene 12 columnas&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-25'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-25'>#</a>
+      </div>
+      <h2>EmptyField</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">EmptyField</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-26'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-26'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando hay algún campo en blanco.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+        <span class="n">errorMessage</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;El campo </span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s1"> no tiene datos&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-27'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-27'>#</a>
+      </div>
+      <h2>DataTypeNotAllowed</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">DataTypeNotAllowed</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-28'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-28'>#</a>
+      </div>
+      <p>Hereda de Error, se lanza cuando no el tipo de datos de entrada no está especificado.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataType</span><span class="p">):</span>
+        <span class="n">errorMessage</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;El tipo de datos </span><span class="si">{</span><span class="n">dataType</span><span class="si">}</span><span class="s1"> no está soportado&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>

@@ -1,12 +1,28 @@
+## Datos Financieros
+"""
+En este módulo tenemos la clase para tratar la información financiera de ingresos y gastos de un año.
+"""
 import pandas as pd
 from myPackage.Error import *
 import os
 
 
+## Clase FinancialData
+"""
+Herramientas para la gestión de datos financieros:
+
+- **Carga de datos**: Valida el data de entrada o toma uno por defecto (ir al método en [[FinancialData.py#setdataframe]]).
+- **Validación y corrección de datos**: revisa los datos y modifica los incorrectos.
+- **Impresión de resultados**: Muestra los resultados del análisis por pantalla (ir al método en [[FinancialData.py#printresults]]).
+
+Utilizamos la clase [[Error.py]] y sus herederas para gestionar las Excepciones.
+"""
 class FinancialData:
-
+    ## Constructor
+    """
+    Se setean las propiedades del objeto y la ruta donde se localiza este archivo.
+    """
     def __init__(self):
-
         self.file = None
         self.totalIncoming = None
         self.totalOutcoming = None
@@ -17,10 +33,23 @@ class FinancialData:
         self.maxOutcomingAmount = None
         self.df = None
 
+        """
+        Con la librería OS definimos la ruta desde donde se ubica este archivo para poder acceder al archivo 
+        por defecto, si se requiere.
+        """
         self.dirname = os.path.dirname(__file__)
 
+    # === setDataFrame ===
     def setDataFrame(self, data='../data/finanzas2020.csv'):
+        """
+        Parámetros:
+
+        - data (str, dict)
+        """
         try:
+            """
+            Carga y valida el origen de datos. Si no se especifica el parámetro, se carga el archivo de datos ./data/finanzas2020.csv
+            """
             if type(data) == str:
                 data = os.path.join(self.dirname, data)
                 self.file = data
@@ -30,12 +59,24 @@ class FinancialData:
             else:
                 raise DataTypeNotAllowed(type(data))
 
+            """
+            Genera el DataFrame con Pandas. Analiza su contenido. Los datos erróneos o inexistentes se tratarán como cero.
+            """
             self.prepareDataFrame()
 
+            """
+            Validamos que el dataFrame tenga doce columnas (una para cada mes).
+            """
             if self.checkTwelveColumnsInDataFrame() is False:
                 self.file = None
                 raise CSVHasNotTwelveColumns(self.file)
 
+            """
+            Comprobamos los datos de cada columna:
+            
+            1. Todas las columnas tienen que tener datos
+            2. Los datos deben ser numéricos. Los datos no numéricos se setean a cero.
+            """
             self.checkAllMonthsHaveData()
             self.checkValues()
         except Error as e:
@@ -119,7 +160,17 @@ class FinancialData:
         except Exception as e:
             raise CantGetTotalIncoming(e)
 
+    # === printResults ===
     def printResults(self):
+        """
+        Muestra los datos por pantalla:
+
+        - Mes con mayor gasto
+        - Mes con menos gasto
+        - Media de gasto anual
+        - Total de gastos
+        - Total de ingresos
+        """
         try:
             if self.file is None:
                 raise Exception('No hay datos')
@@ -140,7 +191,7 @@ class FinancialData:
         except Exception as e:
             print(e)
 
-
+### Ejecución del script
 if __name__ == '__main__':
     financialData = FinancialData()
     financialData.setDataFrame()

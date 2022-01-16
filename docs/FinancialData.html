@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>FinancialData.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>FinancialData.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <h1>Datos Financieros</h1>
+<p>En este módulo tenemos la clase para tratar la información financiera de ingresos y gastos de un año.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">myPackage.Error</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <h1>Clase FinancialData</h1>
+<p>Herramientas para la gestión de datos financieros:</p>
+<ul>
+<li><strong>Carga de datos</strong>: Valida el data de entrada o toma uno por defecto (ir al método en  <a href="FinancialData.html#setdataframe">FinancialData.py</a>).</li>
+<li><strong>Validación y corrección de datos</strong>: revisa los datos y modifica los incorrectos.</li>
+<li><strong>Impresión de resultados</strong>: Muestra los resultados del análisis por pantalla (ir al método en  <a href="FinancialData.html#printresults">FinancialData.py</a>).</li>
+</ul>
+<p>Utilizamos la clase  <a href="Error.html">Error.py</a> y sus herederas para gestionar las Excepciones.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">FinancialData</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <h1>Constructor</h1>
+<p>Se setean las propiedades del objeto y la ruta donde se localiza este archivo.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalIncoming</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalOutcoming</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outcomingAverage</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minOutcomingMonth</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minOutcomingAmount</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxOutcomingMonth</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxOutcomingAmount</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>Con la librería OS definimos la ruta desde donde se ubica este archivo para poder acceder al archivo 
+por defecto, si se requiere.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="bp">self</span><span class="o">.</span><span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <h3><span id="setdataframe" href="setdataframe"> setDataFrame </span></h3>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">setDataFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s1">&#39;../data/finanzas2020.csv&#39;</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p>Parámetros:</p>
+<ul>
+<li>data (str, dict)</li>
+</ul>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">try</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>Carga y valida el origen de datos. Si no se especifica el parámetro, se carga el archivo de datos ./data/finanzas2020.csv</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDataFrameFromCSV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DataTypeNotAllowed</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Genera el DataFrame con Pandas. Analiza su contenido. Los datos erróneos o inexistentes se tratarán como cero.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>            <span class="bp">self</span><span class="o">.</span><span class="n">prepareDataFrame</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Validamos que el dataFrame tenga doce columnas (una para cada mes).</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkTwelveColumnsInDataFrame</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">raise</span> <span class="n">CSVHasNotTwelveColumns</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>Comprobamos los datos de cada columna:</p>
+<ol>
+<li>Todas las columnas tienen que tener datos</li>
+<li>Los datos deben ser numéricos. Los datos no numéricos se setean a cero.</li>
+</ol>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>            <span class="bp">self</span><span class="o">.</span><span class="n">checkAllMonthsHaveData</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checkValues</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getDataFrameFromCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">raise</span> <span class="n">FinnancialFileNotFound</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">prepareDataFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantCreateDataFrame</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">checkTwelveColumnsInDataFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">checkAllMonthsHaveData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">]):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">checkValues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">finally</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-15'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-15'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getMaxOutcomingAmount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantGetMaxOutcomingAmount</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-16'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-16'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getMaxOutcomingMonth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantGetMaxOutcomingMonth</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-17'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-17'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getMinOutcomingAmount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantGetMinOutcomingAmount</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-18'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-18'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getMinOutcomingMonth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantGetMinOutcomingMonth</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-19'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-19'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getOutcomingAverage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantGetOutcomingAverage</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-20'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-20'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getTotalOutcoming</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantGetTotalOutcoming</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-21'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">getTotalIncoming</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CantGetTotalIncoming</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-22'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-22'>#</a>
+      </div>
+      <h3><span id="printresults" href="printresults"> printResults </span></h3>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">printResults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-23'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-23'>#</a>
+      </div>
+      <p>Muestra los datos por pantalla:</p>
+<ul>
+<li>Mes con mayor gasto</li>
+<li>Mes con menos gasto</li>
+<li>Media de gasto anual</li>
+<li>Total de gastos</li>
+<li>Total de ingresos</li>
+</ul>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No hay datos&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">maxOutcomingAmount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMaxOutcomingAmount</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">maxOutcomingMonth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMaxOutcomingMonth</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">minOutcomingAmount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMinOutcomingAmount</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">minOutcomingMonth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMinOutcomingMonth</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outcomingAverage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOutcomingAverage</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">totalOutcoming</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTotalOutcoming</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">totalIncoming</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTotalIncoming</span><span class="p">()</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El mes que más se ha gastado ha sido </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">maxOutcomingMonth</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">maxOutcomingAmount</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El mes que menos se ha gastado ha sido </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">minOutcomingMonth</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">minOutcomingAmount</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La media de gasto mensual ha sido </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">outcomingAverage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El total de gastos ha sido </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">totalOutcoming</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El total de ingresos ha sido </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">totalIncoming</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-24'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-24'>#</a>
+      </div>
+      <h2>Ejecución del script</h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">financialData</span> <span class="o">=</span> <span class="n">FinancialData</span><span class="p">()</span>
+    <span class="n">financialData</span><span class="o">.</span><span class="n">setDataFrame</span><span class="p">()</span>
+    <span class="n">financialData</span><span class="o">.</span><span class="n">printResults</span><span class="p">()</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
