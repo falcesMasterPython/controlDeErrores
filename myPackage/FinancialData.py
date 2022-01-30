@@ -179,8 +179,9 @@ class FinancialData:
                 self.maxOutcomingMonth = self.getMaxOutcomingMonth()
                 self.minOutcomingAmount = self.getMinOutcomingAmount()
                 self.minOutcomingMonth = self.getMinOutcomingMonth()
-                self.outcomingAverage = self.getOutcomingAverage()
+                # self.outcomingAverage = self.getOutcomingAverage()
                 self.totalOutcoming = self.getTotalOutcoming()
+                self.outcomingAverage = self.totalOutcoming / 12
                 self.totalIncoming = self.getTotalIncoming()
 
                 print(f"El mes que más se ha gastado ha sido {self.maxOutcomingMonth} ({self.maxOutcomingAmount})")
